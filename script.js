@@ -7,13 +7,13 @@ const drums = new Part({
 drums.add(
   new Filter({
     key: 'kick',
-    active: (n) => n === 0 || n === 6,
+    active: (n, measure) => n === 0 || (measure % 2 === 0 && n === 6) || (measure % 2 !== 0 && n == 4),
   })
 );
 drums.add(
   new Filter({
     key: 'kick2',
-    active: (n) => n === 0 || n === 6,
+    active: (n, measure) => n === 0 || (measure % 2 === 0 && n === 6) || (measure % 2 !== 0 && n == 4),
   })
 );
 
