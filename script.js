@@ -7,13 +7,13 @@ const drums = new Part({
 drums.add(
   new Filter({
     key: 'kick',
-    active: (n) => n === 0,
+    active: (n) => n === 0 || n === 6,
   })
 );
 drums.add(
   new Filter({
     key: 'kick2',
-    active: (n) => n === 0,
+    active: (n) => n === 0 || n === 6,
   })
 );
 
@@ -161,7 +161,7 @@ piano.add(
 
 /* Bassline */
 const bass = new Part({
-  sound: 'mono_bass',
+  sound: 'flat_bassist',
   measure: 14,
 });
 
@@ -287,6 +287,63 @@ bass.add(
   })
 );
 
+// Lead!
+const lead = new Part({
+  sound: 'violin',
+  measure: 14,
+});
+
+// Intro
+const intro_keys = ['G3', 'F3', 'G3', 'G3#', 'G3', 'G3#', 'A3#', 'D4#', 'A3#', 'C4', 'A3#', 'G3#', 'G3'];
+const intro_beatArray = [0, 6, 10, 0, 6, 10, 0, 6, 10, 0, 6, 10];
+const intro_measureArray = [0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3];
+const intro_lengthArray = [8, 5, 7, 8, 5, 7, 8, 5, 7, 8, 5, 7];
+intro_keys.forEach((item, index) => {
+  let arrayKey = [];
+  arrayKey.push(item);
+  lead.add(
+    new Filter({
+      key: () => arrayKey,
+      length: intro_lengthArray[index],
+      active: (b, measure) => b === intro_beatArray[index] && measure === intro_measureArray[index],
+    })
+  );
+});
+
+// Putih bersih, berseri, aroma yang memikat...
+const verse1_key = ['G3', 'G3#', 'A3#', 'F4', 'D4#', 'D4', 'D4#', 'C4', 'D4#', 'D4', 'C4', 'A3#', 'C4', 'G3'];
+const verse1_beatArray = [8, 10, 12, 14, 10, 12, 14, 14, 0, 4, 8, 10, 12, 0];
+const verse1_measureArray = [4, 4, 4, 4, 5, 5, 5, 6, 7, 7, 7, 7, 7, 8];
+const verse1_lengthArray = [3, 3, 5, 12, 3, 3, 12, 3, 5, 5, 3, 3, 5, 8];
+verse1_key.forEach((item, index) => {
+  let arrayKey = [];
+  arrayKey.push(item);
+  lead.add(
+    new Filter({
+      key: () => arrayKey,
+      length: verse1_lengthArray[index],
+      active: (b, measure) => b === verse1_beatArray[index] && measure === verse1_measureArray[index],
+    })
+  );
+});
+
+// Bahan yang serbaguna, tepung beras rose brand...
+const verse2_key = ['G3', 'G3#', 'A3#', 'F4', 'G4', 'F4', 'D4#', 'D4', 'D4#', 'D4', 'D4#', 'D4', 'D4#'];
+const verse2_beatArray = [8, 10, 12, 0, 10, 12, 14, 4, 6, 8, 10, 12, 14];
+const verse2_measureArray = [8, 8, 8, 9, 9, 9, 9, 11, 11, 11, 11, 11, 11];
+const verse2_lengthArray = [4, 4, 6, 10, 3, 3, 12, 3, 3, 3, 3, 3, 14];
+verse2_key.forEach((item, index) => {
+  let arrayKey = [];
+  arrayKey.push(item);
+  lead.add(
+    new Filter({
+      key: () => arrayKey,
+      length: verse2_lengthArray[index],
+      active: (b, measure) => b === verse2_beatArray[index] && measure === verse2_measureArray[index],
+    })
+  );
+});
+
 // Build the song
 const ongaq = new Ongaq({
   api_key: '0cc2c54894bd42d685963652eb238c11',
@@ -311,3 +368,4 @@ const ongaq = new Ongaq({
 ongaq.add(drums);
 ongaq.add(piano);
 ongaq.add(bass);
+ongaq.add(lead);
